@@ -1,8 +1,9 @@
 package com.Deusley.apicadastroveiculos.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Veiculo {
+public class Veiculo implements Serializable {
 
     private String nomeDoVeiculo;
     private String placa;
