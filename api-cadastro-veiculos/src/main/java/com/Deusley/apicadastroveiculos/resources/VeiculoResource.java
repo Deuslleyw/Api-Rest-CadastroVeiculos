@@ -1,16 +1,31 @@
 package com.Deusley.apicadastroveiculos.resources;
 
+import com.Deusley.apicadastroveiculos.domain.Veiculo;
+import com.Deusley.apicadastroveiculos.services.VeiculoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping(value="/veiculos")
+@RequestMapping(value = "/veiculos")
 public class VeiculoResource {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String testar(){
-        return "Teste Rest ok! ";
+    @Autowired
+    private VeiculoService service;
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public ResponseEntity<?> find(@PathVariable Integer id){
+        Optional<Veiculo> obj = service.find(id);
+        return ResponseEntity.ok().body(obj);
+
+
     }
 
 }

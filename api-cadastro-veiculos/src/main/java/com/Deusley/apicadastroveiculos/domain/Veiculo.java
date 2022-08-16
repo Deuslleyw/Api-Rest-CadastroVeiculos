@@ -1,31 +1,60 @@
 package com.Deusley.apicadastroveiculos.domain;
 
+import com.Deusley.apicadastroveiculos.enums.EstadoVeiculo;
+import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Veiculo implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String Placa;
     private String nomeDoVeiculo;
-    private String placa;
     private String marca;
     private Integer anoModelo;
     private Integer anoFabricacao;
     private String modelo;
     private String cor;
     private String fabricante;
+    private EstadoVeiculo estadoVeiculo;
 
 
-    public Veiculo(){}
+    public Veiculo() {}
 
-    public Veiculo(String nomeDoVeiculo, String placa, String marca, Integer anoModelo, Integer anoFabricacao, String modelo, String cor, String fabricante) {
+    public Veiculo(Integer id, String placa, String nomeDoVeiculo, String marca, Integer anoModelo, Integer anoFabricacao, String modelo, String cor, String fabricante, EstadoVeiculo estadoVeiculo) {
+        this.id = id;
+        this.Placa = placa;
         this.nomeDoVeiculo = nomeDoVeiculo;
-        this.placa = placa;
         this.marca = marca;
         this.anoModelo = anoModelo;
         this.anoFabricacao = anoFabricacao;
         this.modelo = modelo;
         this.cor = cor;
         this.fabricante = fabricante;
+        this.estadoVeiculo = estadoVeiculo;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPlaca() {
+        return Placa;
+    }
+
+    public void setPlaca(String placa) {
+        Placa = placa;
     }
 
     public String getNomeDoVeiculo() {
@@ -34,14 +63,6 @@ public class Veiculo implements Serializable {
 
     public void setNomeDoVeiculo(String nomeDoVeiculo) {
         this.nomeDoVeiculo = nomeDoVeiculo;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
     }
 
     public String getMarca() {
@@ -92,16 +113,24 @@ public class Veiculo implements Serializable {
         this.fabricante = fabricante;
     }
 
+    public EstadoVeiculo getEstadoVeiculo() {
+        return estadoVeiculo;
+    }
+
+    public void setEstadoVeiculo(EstadoVeiculo estadoVeiculo) {
+        this.estadoVeiculo = estadoVeiculo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Veiculo)) return false;
         Veiculo veiculo = (Veiculo) o;
-        return placa.equals(veiculo.placa);
+        return Objects.equals(id, veiculo.id) && Objects.equals(Placa, veiculo.Placa) && estadoVeiculo == veiculo.estadoVeiculo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(placa);
+        return Objects.hash(id, Placa, estadoVeiculo);
     }
 }
