@@ -1,6 +1,7 @@
 package com.Deusley.apicadastroveiculos.domain;
 
 import com.Deusley.apicadastroveiculos.enums.EstadoVeiculo;
+import com.Deusley.apicadastroveiculos.enums.StatusDoVeiculo;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,21 +25,10 @@ public class Veiculo implements Serializable {
     private String cor;
     private String fabricante;
     private EstadoVeiculo estadoVeiculo;
+    private StatusDoVeiculo status;
 
 
-    public Veiculo() {}
-
-    public Veiculo(Integer id, String placa, String nomeDoVeiculo, String marca, Integer anoModelo, Integer anoFabricacao, String modelo, String cor, String fabricante, EstadoVeiculo estadoVeiculo) {
-        this.id = id;
-        this.Placa = placa;
-        this.nomeDoVeiculo = nomeDoVeiculo;
-        this.marca = marca;
-        this.anoModelo = anoModelo;
-        this.anoFabricacao = anoFabricacao;
-        this.modelo = modelo;
-        this.cor = cor;
-        this.fabricante = fabricante;
-        this.estadoVeiculo = estadoVeiculo;
+    public Veiculo() {
     }
 
     public Integer getId() {
@@ -121,16 +111,11 @@ public class Veiculo implements Serializable {
         this.estadoVeiculo = estadoVeiculo;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Veiculo)) return false;
-        Veiculo veiculo = (Veiculo) o;
-        return Objects.equals(id, veiculo.id) && Objects.equals(Placa, veiculo.Placa) && estadoVeiculo == veiculo.estadoVeiculo;
+    public StatusDoVeiculo getStatus() {
+        return status;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, Placa, estadoVeiculo);
+    public void setStatus(StatusDoVeiculo status) {
+        this.status = status;
     }
 }
