@@ -28,8 +28,7 @@ public class Veiculo implements Serializable {
     private StatusDoVeiculo status;
 
 
-    public Veiculo() {
-    }
+    public Veiculo() {}
 
     public Integer getId() {
         return id;
