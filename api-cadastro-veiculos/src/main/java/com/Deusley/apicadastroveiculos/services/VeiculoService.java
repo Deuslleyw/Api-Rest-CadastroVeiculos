@@ -50,10 +50,8 @@ public class VeiculoService {
     }
 
     public Veiculo fromDTO(VeiculoDTO objDTO) {
-
         return new Veiculo(objDTO.getId(),objDTO.getPlaca(),null,null,null,null,null,null,null,null,objDTO.getStatus());
     }
-
 
     private void updateVeic(Veiculo newObj, Veiculo obj) {
         newObj.setPlaca(obj.getPlaca());

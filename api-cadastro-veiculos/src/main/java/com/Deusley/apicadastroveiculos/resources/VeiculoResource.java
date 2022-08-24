@@ -54,7 +54,7 @@ public class VeiculoResource {
     public ResponseEntity<Page<VeiculoDTO>> findPage(
             @RequestParam(value="page", defaultValue = "0")	Integer page,
             @RequestParam(value="linesPerPage", defaultValue = "24")Integer linesPerPage,
-            @RequestParam(value="orderBy", defaultValue = "nomeDoVeiculo")	String orderBy,
+            @RequestParam(value="orderBy", defaultValue = "placa")	String orderBy,
             @RequestParam(value="direction", defaultValue = "ASC")	String direction) {
 
         Page <Veiculo> lista = service.findPage(page, linesPerPage, orderBy, direction);
