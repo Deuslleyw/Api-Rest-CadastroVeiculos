@@ -2,21 +2,22 @@ package com.Deusley.apicadastroveiculos.domain;
 
 import com.Deusley.apicadastroveiculos.enums.EstadoVeiculo;
 import com.Deusley.apicadastroveiculos.enums.StatusDoVeiculo;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 public class Veiculo implements Serializable {
+    private static final long serialVersionUID = 42L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String Placa;
+    private String placa;
     private String nomeDoVeiculo;
     private String marca;
     private Integer anoModelo;
@@ -30,6 +31,20 @@ public class Veiculo implements Serializable {
 
     public Veiculo() {}
 
+    public Veiculo(Integer id, String placa, String nomeDoVeiculo, String marca, Integer anoModelo, Integer anoFabricacao, String modelo, String cor, String fabricante, EstadoVeiculo estadoVeiculo, StatusDoVeiculo status) {
+        this.id = id;
+        this.placa = placa;
+        this.nomeDoVeiculo = nomeDoVeiculo;
+        this.marca = marca;
+        this.anoModelo = anoModelo;
+        this.anoFabricacao = anoFabricacao;
+        this.modelo = modelo;
+        this.cor = cor;
+        this.fabricante = fabricante;
+        this.estadoVeiculo = estadoVeiculo;
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -39,11 +54,11 @@ public class Veiculo implements Serializable {
     }
 
     public String getPlaca() {
-        return Placa;
+        return placa;
     }
 
     public void setPlaca(String placa) {
-        Placa = placa;
+        placa = placa;
     }
 
     public String getNomeDoVeiculo() {

@@ -3,6 +3,8 @@ package com.Deusley.apicadastroveiculos.resources.exception;
 import java.io.Serializable;
 
 public class StandardError implements Serializable {
+    private static final long serialVersionUID = 42L;
+
 
     private Integer status;
     private String msg;
