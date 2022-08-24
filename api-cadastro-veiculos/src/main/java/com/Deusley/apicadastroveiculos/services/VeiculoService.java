@@ -1,6 +1,7 @@
 package com.Deusley.apicadastroveiculos.services;
 
 import com.Deusley.apicadastroveiculos.DTO.VeiculoDTO;
+import com.Deusley.apicadastroveiculos.DTO.VeiculoNewDTO;
 import com.Deusley.apicadastroveiculos.Repository.VeiculoRepository;
 import com.Deusley.apicadastroveiculos.domain.Veiculo;
 import com.Deusley.apicadastroveiculos.services.exceptions.ObjctNotFoundException;
@@ -50,8 +51,15 @@ public class VeiculoService {
     }
 
     public Veiculo fromDTO(VeiculoDTO objDTO) {
-        return new Veiculo(objDTO.getId(),objDTO.getPlaca(),null,null,null,null,null,null,null,null,objDTO.getStatus());
+        return new Veiculo(objDTO.getId(), objDTO.getPlaca(), null, null, null, null, null, null, null, null, objDTO.getStatus());
     }
+
+    public Veiculo fromDTO(VeiculoNewDTO objDTO) {
+
+        return new Veiculo(null, objDTO.getPlaca(), objDTO.getNomeDoVeiculo(), objDTO.getMarca(), objDTO.getAnoModelo(), objDTO.getAnoFabricacao(),
+                objDTO.getModelo(), objDTO.getCor(), objDTO.getFabricante(), objDTO.getEstadoVeiculo(), objDTO.getStatus());
+
+}
 
     private void updateVeic(Veiculo newObj, Veiculo obj) {
         newObj.setPlaca(obj.getPlaca());

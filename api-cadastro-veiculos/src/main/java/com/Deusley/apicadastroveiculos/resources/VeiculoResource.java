@@ -1,13 +1,16 @@
 package com.Deusley.apicadastroveiculos.resources;
 
 import com.Deusley.apicadastroveiculos.DTO.VeiculoDTO;
+import com.Deusley.apicadastroveiculos.DTO.VeiculoNewDTO;
 import com.Deusley.apicadastroveiculos.domain.Veiculo;
 import com.Deusley.apicadastroveiculos.services.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,14 +28,14 @@ public class VeiculoResource {
 
     }
 
-    //@RequestMapping(method=RequestMethod.POST)
-    //public ResponseEntity<Void> insert(@RequestBody VeiculoNewDTO objDTO){
-      //  Veiculo obj = service.fromDTO(objDTO);
-       // obj = service.insert(obj);
-        //URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-        //return ResponseEntity.created(uri).build();
+    @RequestMapping(method=RequestMethod.POST)
+    public ResponseEntity<Void> insert(@RequestBody VeiculoNewDTO objDTO){
+        Veiculo obj = service.fromDTO(objDTO);
+        obj = service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
 
-    //}
+    }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@RequestBody VeiculoDTO objDTO, @PathVariable Integer id){
