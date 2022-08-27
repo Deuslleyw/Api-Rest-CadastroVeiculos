@@ -22,7 +22,9 @@ public class VeiculoNewDTO implements Serializable {
     private StatusDoVeiculo status;
 
 
-    public VeiculoNewDTO(){}
+    public VeiculoNewDTO(){
+        this.setStatus(StatusDoVeiculo.ATIVO);
+    }
 
     public String getPlaca() {
         return placa;
