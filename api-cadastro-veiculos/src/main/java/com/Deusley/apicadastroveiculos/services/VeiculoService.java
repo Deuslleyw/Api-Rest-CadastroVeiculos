@@ -23,15 +23,18 @@ public class VeiculoService {
     public Veiculo find(Integer id) {
         return rep.findById(id)
                 .orElseThrow(() -> new ObjctNotFoundException(" Veiculo - ID: " + id + ", não encontrado!"));
-
-
     }
 
     @Transactional
     public Veiculo insert(Veiculo obj) {
         obj.setId(null);
+
+        if (this.isValidaPlaca(obj.getPlaca())) {
+            throw new RuntimeException("A placa " + obj.getPlaca() + " ja existe na Base de Dados!");
+        }
         return rep.save(obj);
     }
+
 
     public Veiculo update(Veiculo obj) {
         Veiculo newObj = find(obj.getId());
@@ -48,10 +51,6 @@ public class VeiculoService {
     public Page<Veiculo> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         var response = rep.findAll(pageRequest);
-
-
-
-
         return response;
     }
 
@@ -60,15 +59,19 @@ public class VeiculoService {
     }
 
     public Veiculo fromDTO(VeiculoNewDTO objDTO) {
-
         return new Veiculo(null, objDTO.getPlaca(), objDTO.getNomeDoVeiculo(), objDTO.getMarca(), objDTO.getAnoModelo(), objDTO.getAnoFabricacao(),
                 objDTO.getModelo(), objDTO.getCor(), objDTO.getFabricante(), objDTO.getEstadoVeiculo(), objDTO.getStatus());
 
-}
+    }
 
     private void updateVeic(Veiculo newObj, Veiculo obj) {
         newObj.setPlaca(obj.getPlaca());
         newObj.setStatus(obj.getStatus());                                   //Atualização restrita apenas a placa e Status do veiculo!
 
     }
+
+    private Boolean isValidaPlaca(String placa) {
+        return rep.existsByPlaca(placa);
+    }
+
 }

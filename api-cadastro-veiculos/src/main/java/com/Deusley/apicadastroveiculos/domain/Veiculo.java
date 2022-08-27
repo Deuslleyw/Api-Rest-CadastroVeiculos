@@ -3,10 +3,7 @@ package com.Deusley.apicadastroveiculos.domain;
 import com.Deusley.apicadastroveiculos.enums.EstadoVeiculo;
 import com.Deusley.apicadastroveiculos.enums.StatusDoVeiculo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -17,6 +14,7 @@ public class Veiculo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String placa;
     private String nomeDoVeiculo;
     private String marca;
