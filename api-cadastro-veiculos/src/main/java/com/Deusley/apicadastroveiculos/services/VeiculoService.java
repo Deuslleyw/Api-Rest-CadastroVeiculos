@@ -47,7 +47,12 @@ public class VeiculoService {
 
     public Page<Veiculo> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        return rep.findAll(pageRequest);
+        var response = rep.findAll(pageRequest);
+
+
+
+
+        return response;
     }
 
     public Veiculo fromDTO(VeiculoDTO objDTO) {
@@ -63,7 +68,7 @@ public class VeiculoService {
 
     private void updateVeic(Veiculo newObj, Veiculo obj) {
         newObj.setPlaca(obj.getPlaca());
-        newObj.setStatus(obj.getStatus());
+        newObj.setStatus(obj.getStatus());                                   //Atualização restrita apenas a placa e Status do veiculo!
 
     }
 }

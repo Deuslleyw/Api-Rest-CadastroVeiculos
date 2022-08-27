@@ -2,14 +2,20 @@ package com.Deusley.apicadastroveiculos.resources;
 
 import com.Deusley.apicadastroveiculos.DTO.VeiculoDTO;
 import com.Deusley.apicadastroveiculos.DTO.VeiculoNewDTO;
+import com.Deusley.apicadastroveiculos.DTO.VeiculoResponseDTO;
+
+import com.Deusley.apicadastroveiculos.Repository.VeiculoRepository;
 import com.Deusley.apicadastroveiculos.domain.Veiculo;
 import com.Deusley.apicadastroveiculos.services.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.Cacheable;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,15 +27,15 @@ public class VeiculoResource {
     @Autowired
     private VeiculoService service;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public ResponseEntity<?> find(@PathVariable Integer id) {
         Veiculo obj = service.find(id);
         return ResponseEntity.ok().body(obj);
 
     }
 
-    @RequestMapping(method=RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody VeiculoNewDTO objDTO){
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody VeiculoNewDTO objDTO) {
         Veiculo obj = service.fromDTO(objDTO);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -37,32 +43,34 @@ public class VeiculoResource {
 
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody VeiculoDTO objDTO, @PathVariable Integer id){
-       Veiculo obj = service.fromDTO(objDTO);
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@RequestBody VeiculoDTO objDTO, @PathVariable Integer id) {
+        Veiculo obj = service.fromDTO(objDTO);
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
 
 
-    @RequestMapping(method=RequestMethod.GET)
-    public ResponseEntity<List<VeiculoDTO>> findAll() {
+    @GetMapping
+    public ResponseEntity<List<VeiculoResponseDTO>> findAll() {
         List<Veiculo> lista = service.findAll();
-        List<VeiculoDTO> listDTO = lista.stream().map(obj -> new VeiculoDTO(obj)).collect(Collectors.toList());
+        List<VeiculoResponseDTO> listDTO = lista.stream().map(obj -> new VeiculoResponseDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
-    }
 
-    @RequestMapping( value = "/page" ,method=RequestMethod.GET)
-    public ResponseEntity<Page<VeiculoDTO>> findPage(
+          }
+
+        @RequestMapping( value = "/page" ,method=RequestMethod.GET)
+        public ResponseEntity<Page<?>> findPage(
             @RequestParam(value="page", defaultValue = "0")	Integer page,
-            @RequestParam(value="linesPerPage", defaultValue = "24")Integer linesPerPage,
+            @RequestParam(value="linesPerPage", defaultValue = "2")Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue = "placa")	String orderBy,
             @RequestParam(value="direction", defaultValue = "ASC")	String direction) {
 
         Page <Veiculo> lista = service.findPage(page, linesPerPage, orderBy, direction);
-        Page<VeiculoDTO> listaDTO = lista.map(obj -> new VeiculoDTO(obj));
-        return ResponseEntity.ok().body(listaDTO);
+        Page<VeiculoResponseDTO> responseMap = lista.map(obj -> new VeiculoResponseDTO(obj));
+        return ResponseEntity.ok().body(responseMap);
     }
+
 
 }
